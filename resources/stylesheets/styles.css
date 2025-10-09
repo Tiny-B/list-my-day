@@ -80,25 +80,41 @@ main {
   height: 50px;
 }
 
-#complete-btn, #edit-btn, #delete-btn {
+#complete-btn, #edit-btn, #delete-btn, #restore-btn {
   color: var(--main-font-color);
   border: 3px solid var(--accent-color);
 }
 
-#complete-btn:hover, #edit-btn:hover, #delete-btn:hover {
-  border: 3px solid var(--tertiary-accent-color);
+#complete-btn:hover, #edit-btn:hover, #delete-btn:hover, #restore-btn:hover {
+  border: 5px solid var(--tertiary-accent-color);
 }
 
 #complete-btn {
   background-color: rgb(0, 151, 101);
 }
+#complete-btn:hover {
+  background-color: rgb(0, 214, 143);
+}
 
 #edit-btn {
   background-color: rgb(52, 0, 194);
 }
+#edit-btn:hover {
+  background-color: rgb(88, 28, 255);
+}
 
 #delete-btn {
   background-color: rgb(158, 0, 40);
+}
+#delete-btn:hover {
+  background-color: rgb(211, 0, 53);
+}
+
+#restore-btn {
+  background-color: rgb(158, 0, 150);
+}
+#restore-btn:hover {
+  background-color: rgb(204, 1, 194);
 }
 
 .accordion-button {
