@@ -14,11 +14,54 @@
 	padding: 0;
 }
 
-html {
+.flex-container {
+  display: flex;
+}
+
+body {
 	background-color: var(--bg-color);
 	color: var(--main-font-color);
 }
 
+main {
+  justify-content: center;
+}
+
+/* -----Task list------ */
+.task-list-container {
+  width: 90%;
+  margin: 50px 20px;
+  background-color: rgb(36, 36, 36);
+  border-radius: 5%;
+}
+
+.accordion-item {
+  border: 1px solid rgb(255, 0, 85);
+  margin: 20px;
+}
+
+.accordion-body {
+  color: var(--main-font-color);
+  background-color: var(--bg-color);
+}
+
+.accordion-button {
+  background: var(--gradient-colors);
+  color: var(--main-font-color)
+}
+
+.accordion-button:not(.collapsed) {
+  
+  background: linear-gradient(
+		to left,
+		rgb(104, 255, 185),
+		rgb(0, 255, 213)
+	);
+  
+  font-weight: bolder;
+}
+
+/* -----Bootstrap overrides----- */
 .navbar-brand {
 	color: var(--main-font-color);
 }
