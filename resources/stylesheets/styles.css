@@ -22,9 +22,28 @@
   display: flex;
 }
 
+.divider {
+  width: 90%;
+  height: 2px;
+  background-color: var(--tertiary-accent-color);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  background-image: url(../../il_fullxfull.1711813185_h9nl.webp);
+  opacity: 0.1;
+  background-size: 500px;
+}
+
 body {
 	background-color: var(--bg-color);
 	color: var(--main-font-color);
+  
 }
 
 main {
@@ -37,6 +56,7 @@ main {
 /* -----Sort buttons ------*/
 .sort-btn-container {
   margin-top: 50px;
+  margin-bottom: 0;
   justify-content: space-around;
   align-items: center;
   width: 450px;
@@ -51,6 +71,7 @@ main {
 
 .sort-btn {
   width: 100px;
+  height: 30px;
   background-color: var(--bg-color);
   color: var(--main-font-color);
   border: 3px solid var(--tertiary-accent-color);
@@ -63,14 +84,18 @@ main {
 /* -----Task list------ */
 .task-list-container {
   width: 90%;
-  margin: 50px 20px;
+  margin: 20px 20px 70px 20px;
   background-color: var(--secondary-color);
   border: 3px solid var(--accent-color);
 }
 
 .task-explain-text {
+  background-color: var(--secondary-color);
+  padding: 10px;
   text-align: center;
   margin-top: 50px;
+  width: 70%;
+  border: 3px solid var(--tertiary-accent-color)
 }
 
 .list-title {
@@ -183,6 +208,22 @@ main {
 .open-create-dialog:hover {
   border: 3px solid var(--tertiary-accent-color);
   color: var(--tertiary-accent-color);
+}
+
+/* ----- create task modal------*/
+.modal-header {
+  background: var(--gradient-colors);
+  border: none;
+}
+
+.modal-title {
+  color: var(--main-font-color);
+}
+
+.modal-body, .modal-footer {
+  background-color: var(--secondary-color);
+  border-top: 1px solid var(--tertiary-accent-color);
+  color: var(--main-font-color);
 }
 
 /* -----Bootstrap overrides----- */

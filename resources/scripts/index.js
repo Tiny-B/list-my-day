@@ -1,7 +1,5 @@
-// array of all non completed tasks
+// arrays of the tasks for both lists to keep track
 let taskListArray = [];
-
-// array of all non completed tasks
 let completedListArray = [];
 
 const createBtn = document.getElementById('create-btn');
@@ -18,9 +16,35 @@ const cleanValue = input => {
 };
 
 const form = document.getElementById('task-form');
+console.log('form:', form);
+
+// we should clear the forms values, ready for the next task to be added
+const clearForm = () => {
+	for (let i = 0; i < form.length; i++) {
+		form[i].value = '';
+	}
+
+	form[2].value = '1';
+	form[3].value = '1';
+	form[4].value = '2025';
+};
+
+//check form values for empty values, date isn't required
+const checkForm = () => {
+	if (form[0].value == '' || form[1].value == '') {
+		return false;
+	}
+
+	return true;
+};
 
 // this function will insert a new accordion element into our list using data from a form
 const createTask = () => {
+	// if the form is empty we cancel
+	if (!checkForm()) {
+		return;
+	}
+
 	// we remove the placeholder text that is only shown when there are no tasks in the list yet
 	if (taskListArray.length <= 0) {
 		document.getElementsByClassName('task-list-placeholder')[0].style.display =
@@ -29,14 +53,15 @@ const createTask = () => {
 
 	const taskID = taskListArray.length + 1;
 
-	// assign the form values to the object values
+	// assign the form values to the task object values
 	let taskObj = {
 		id: taskID,
-		title: cleanValue(form[0].value),
-		desc: cleanValue(form[1].value),
+		// trim values to keep a consistent and clean design
+		title: cleanValue(form[0].value.trim()),
+		desc: cleanValue(form[1].value.trim()),
 		dateAdded: {
-			d: '01',
-			m: '02',
+			d: '1', // use device date
+			m: '2',
 			y: '1985',
 		},
 		dateDue: {
@@ -86,6 +111,7 @@ const createTask = () => {
 	taskContainer.appendChild(newTask);
 
 	taskListArray.push(taskObj);
+	clearForm();
 };
 
 createBtn.onclick = createTask;
@@ -103,10 +129,7 @@ createBtn.onclick = createTask;
 //         <div class="accordion-body flex-container">
 //           <p class="task-element">Task description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, eaque..</p>
 //           <div class="task-element flex-container">
-//             <strong>Date Added: </strong> <code>01/01/2025</code>
-//           </div>
-//           <div class="task-element flex-container">
-//             <strong>Date Due: </strong> <code>01/01/2025</code>
+//             <strong>Date Completed: </strong> <code>01/01/2025</code>
 //           </div>
 //           <div class="task-btns flex-container">
 //             <button id="restore-btn">Restore</button>
