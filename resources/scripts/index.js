@@ -1,7 +1,8 @@
-let taskCount = 0;
-let completedCount = 0;
-
+// array of all non completed tasks
 let taskListArray = [];
+
+// array of all non completed tasks
+let completedListArray = [];
 
 const createBtn = document.getElementById('create-btn');
 
@@ -10,22 +11,25 @@ const completedTaskContainer = document.getElementsByClassName(
 	'task-list-container'
 )[1];
 
+// prevents html injection
 const cleanValue = input => {
 	return new DOMParser().parseFromString(input, 'text/html').documentElement
 		.textContent;
 };
 
 const form = document.getElementById('task-form');
-console.log(form);
 
+// this function will insert a new accordion element into our list using data from a form
 const createTask = () => {
-	if (taskCount <= 0) {
+	// we remove the placeholder text that is only shown when there are no tasks in the list yet
+	if (taskListArray.length <= 0) {
 		document.getElementsByClassName('task-list-placeholder')[0].style.display =
 			'none';
 	}
 
 	const taskID = taskListArray.length + 1;
 
+	// assign the form values to the object values
 	let taskObj = {
 		id: taskID,
 		title: cleanValue(form[0].value),
@@ -43,6 +47,7 @@ const createTask = () => {
 	};
 
 	const newTask = document.createElement('div');
+	// insert the data using a template literal
 	let content = `
     <!-- task element-->
       <div>
@@ -81,10 +86,6 @@ const createTask = () => {
 	taskContainer.appendChild(newTask);
 
 	taskListArray.push(taskObj);
-
-	taskCount++;
-
-	console.log(`${taskObj.title}: `, taskListArray);
 };
 
 createBtn.onclick = createTask;

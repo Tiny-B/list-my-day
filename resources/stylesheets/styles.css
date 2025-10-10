@@ -177,6 +177,7 @@ main {
   border: 3px solid var(--accent-color);
   color: var(--accent-color);
   font-size: 2rem;
+  padding: 0;
 }
 
 .open-create-dialog:hover {

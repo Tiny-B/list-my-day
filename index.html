@@ -13,6 +13,7 @@
 
 	<body>
     <header>
+      <!--We fixed the navbar so it can be accessed when there are many tasks in the list-->
       <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">List Your Day</a>
@@ -55,6 +56,7 @@
         <p>Click complete to move the task to the completed list.</p>
       </div>
       
+      <!-- sorting the array of tasks is a crucial feature for any kind of list-->
       <div class="sort-btn-container flex-container">
         <p class="sort-label">Sort by: </p>
         <button class="sort-btn" id="sortAlphabet">A-Z</button>
@@ -91,6 +93,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              <!--the data we pass into the taskObj to create the task-->
               <div class="task-form-container">
                 <form id="task-form">
                   <div class="form-element">
