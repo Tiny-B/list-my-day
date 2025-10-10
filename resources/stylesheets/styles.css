@@ -34,6 +34,32 @@ main {
   align-items: center;
 }
 
+/* -----Sort buttons ------*/
+.sort-btn-container {
+  margin-top: 50px;
+  justify-content: space-around;
+  align-items: center;
+  width: 450px;
+  height: 50px;
+  background-color: var(--secondary-color);
+  border: 3px solid var(--accent-color);
+}
+
+.sort-label {
+  margin-bottom: 0;
+}
+
+.sort-btn {
+  width: 100px;
+  background-color: var(--bg-color);
+  color: var(--main-font-color);
+  border: 3px solid var(--tertiary-accent-color);
+}
+
+.sort-btn:hover {
+  border: 3px solid var(--accent-color);
+}
+
 /* -----Task list------ */
 .task-list-container {
   width: 90%;
@@ -43,10 +69,12 @@ main {
 }
 
 .task-explain-text {
+  text-align: center;
   margin-top: 50px;
 }
 
 .list-title {
+  text-decoration: underline;
   text-align: center;
   margin-top: 15px;
 }
