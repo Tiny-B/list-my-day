@@ -136,13 +136,13 @@ main {
   font-weight: bolder;
 }
 
-.create-btn-container {
+.open-btn-container {
   position: fixed;
   bottom: 10%;
   right: 10%;
 }
 
-#create-btn {
+.open-create-dialog {
   width: 50px;
   height: 50px;
   background-color: var(--secondary-color);
@@ -151,7 +151,7 @@ main {
   font-size: 2rem;
 }
 
-#create-btn:hover {
+.open-create-dialog:hover {
   border: 3px solid var(--tertiary-accent-color);
   color: var(--tertiary-accent-color);
 }

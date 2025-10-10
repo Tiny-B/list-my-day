@@ -3,25 +3,6 @@ let completedCount = 0;
 
 let taskListArray = [];
 
-// test dummy data, need to get this from input form
-let taskObj = {
-	id: 0,
-	title: 'This is a task title.',
-	desc: 'Task description Task description Task description Task description Task description Task description Task description',
-	dateAdded: {
-		d: '02',
-		m: '02',
-		y: '1985',
-	},
-	dateDue: {
-		d: '02',
-		m: '02',
-		y: '1985',
-	},
-};
-
-//console.info(`Tasks: ${taskCount} - Completed: ${completedCount}`);
-
 const createBtn = document.getElementById('create-btn');
 
 const taskContainer = document.getElementsByClassName('task-list-container')[0];
@@ -34,11 +15,32 @@ const cleanValue = input => {
 		.textContent;
 };
 
+const form = document.getElementById('task-form');
+console.log(form);
+
 const createTask = () => {
 	if (taskCount <= 0) {
 		document.getElementsByClassName('task-list-placeholder')[0].style.display =
 			'none';
 	}
+
+	const taskID = taskListArray.length + 1;
+
+	let taskObj = {
+		id: taskID,
+		title: cleanValue(form[0].value),
+		desc: cleanValue(form[1].value),
+		dateAdded: {
+			d: '01',
+			m: '02',
+			y: '1985',
+		},
+		dateDue: {
+			d: form[2].value,
+			m: form[3].value,
+			y: form[4].value,
+		},
+	};
 
 	const newTask = document.createElement('div');
 	let content = `
@@ -47,31 +49,21 @@ const createTask = () => {
         <div class="accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse${
-							taskObj.id
-						}" aria-expanded="true" aria-controls="panelsStayOpen-collapse${
-		taskObj.id
-	}">
-              ${cleanValue(taskObj.title)}
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse${taskObj.id}" aria-expanded="true" aria-controls="panelsStayOpen-collapse${taskObj.id}">
+              ${taskObj.title}
             </button>
           </h2>
 
-          <div id="panelsStayOpen-collapse${
-						taskObj.id
-					}" class="accordion-collapse collapse">
+          <div id="panelsStayOpen-collapse${taskObj.id}" class="accordion-collapse collapse">
             <div class="accordion-body flex-container">
-              <p class="task-element">${cleanValue(taskObj.desc)}</p>
+              <p class="task-element">${taskObj.desc}</p>
               <div class="task-element flex-container">
                 <strong>Date Added: </strong> 
-                <code>${taskObj.dateAdded.d}/${taskObj.dateAdded.m}/${
-		taskObj.dateAdded.y
-	}</code>
+                <code>${taskObj.dateAdded.d}/${taskObj.dateAdded.m}/${taskObj.dateAdded.y}</code>
               </div>
               <div class="task-element flex-container">
                 <strong>Date Due: </strong> 
-                <code>${taskObj.dateDue.d}/${taskObj.dateDue.m}/${
-		taskObj.dateDue.y
-	}</code>
+                <code>${taskObj.dateDue.d}/${taskObj.dateDue.m}/${taskObj.dateDue.y}</code>
               </div>
               <div class="task-btns flex-container">
                 <button id="complete-btn">Completed</button>
@@ -88,21 +80,7 @@ const createTask = () => {
 	newTask.innerHTML = content;
 	taskContainer.appendChild(newTask);
 
-	taskListArray.push({
-		id: taskListArray.length + 1,
-		title: taskObj.title,
-		desc: taskObj.desc,
-		dateAdded: {
-			d: taskObj.dateAdded.d,
-			m: taskObj.dateAdded.m,
-			y: taskObj.dateAdded.y,
-		},
-		dateDue: {
-			d: taskObj.dateDue.d,
-			m: taskObj.dateDue.m,
-			y: taskObj.dateDue.y,
-		},
-	});
+	taskListArray.push(taskObj);
 
 	taskCount++;
 
