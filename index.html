@@ -64,7 +64,7 @@
         <p class="sort-label">Sort by: </p>
         <button class="sort-btn" id="sortAlphabet">A-Z</button>
         <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
-        <button class="sort-btn" id="sortDate">Date Added</button>
+        <button class="sort-btn selected" id="sortDate">Date Added</button>
       </div>
 
     <!-- task list -->
@@ -81,7 +81,7 @@
         <p class="sort-label">Sort by: </p>
         <button class="sort-btn" id="sortAlphabet">A-Z</button>
         <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
-        <button class="sort-btn" id="sortDate" style="font-size: 0.8rem;">Date Completed</button>
+        <button class="sort-btn selected" id="sortDate" style="font-size: 0.8rem;">Date Completed</button>
       </div>
 
       <!-- Completed tasks -->
@@ -114,10 +114,9 @@
                     <input type="text" id="name" name="name" placeholder="Enter a name..." required/>
                   </div>
 
-                  <code>* Required</code>
                   <div class="form-element">
                     <label for="desc">Task Description: </label>
-                    <textarea type="text" id="desc" name="desc" required placeholder="Enter a desc..."></textarea>
+                    <textarea type="text" id="desc" name="desc" placeholder="Enter a desc..."></textarea>
                   </div>
 
                   <div class="form-element">
@@ -131,8 +130,8 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <!--disable the create button unless we have the inputs we want, prevents model from closing and doing nothing when no data is present-->
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="create-btn" disabled="true">Create</button>
+              <!--disable the create button unless we have the inputs we want, prevents model from closing and doing nothing when no data is present disabled="true"-->
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="create-btn" >Create</button>
             </div>
           </div>
         </div>

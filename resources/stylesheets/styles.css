@@ -74,11 +74,15 @@ main {
   height: 30px;
   background-color: var(--bg-color);
   color: var(--main-font-color);
-  border: 3px solid var(--tertiary-accent-color);
+  border: 3px solid var(--accent-color);
 }
 
 .sort-btn:hover {
-  border: 3px solid var(--accent-color);
+  background-color: var(--secondary-color);
+}
+
+.selected {
+  border: 3px solid var(--tertiary-accent-color);
 }
 
 /* -----Task list------ */
@@ -93,7 +97,8 @@ main {
   background-color: var(--secondary-color);
   padding: 10px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 80px;
+  margin-bottom: 50px;
   width: 70%;
   border: 3px solid var(--tertiary-accent-color)
 }

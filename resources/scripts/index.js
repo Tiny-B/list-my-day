@@ -3,8 +3,12 @@ let taskListArray = [];
 let completedListArray = [];
 
 const createBtn = document.getElementById('create-btn');
+let taskBtns = [];
 
 const taskContainer = document.getElementsByClassName('task-list-container')[0];
+const taskListPlaceholder = document.getElementsByClassName(
+	'task-list-placeholder'
+)[0];
 const completedTaskContainer = document.getElementsByClassName(
 	'task-list-container'
 )[1];
@@ -16,7 +20,6 @@ const cleanValue = input => {
 };
 
 const form = document.getElementById('task-form');
-console.log('form:', form);
 
 // we should clear the forms values, ready for the next task to be added
 const clearForm = () => {
@@ -29,13 +32,50 @@ const clearForm = () => {
 	form[4].value = '2025';
 };
 
-//check form values for empty values, date isn't required
+//check form values for empty value on name as its only one required, date isn't required
 const checkForm = () => {
-	if (form[0].value == '' || form[1].value == '') {
+	if (form[0].value == '') {
 		return false;
 	}
 
 	return true;
+};
+
+const completeTask = i => {
+	console.log(i, 'complete');
+};
+
+const editTask = i => {
+	console.log(i, 'edit');
+};
+
+// deleting a task by creating a new array without the object we want to delete in it and setting it as the new list
+const deleteTask = i => {
+	const element = taskContainer.getElementsByClassName(`task${i}`)[0];
+	element.remove();
+
+	let newArray = [];
+	// remove from array too
+	const taskToDelete = taskListArray.filter(obj => obj.id == i).pop();
+
+	for (let i = 0; i < taskListArray.length; i++) {
+		if (taskListArray[i].id !== taskToDelete.id) {
+			newArray.push(taskListArray[i]);
+			console.log(`This is not the one`, taskListArray[i]);
+		} else {
+			console.log(`This is the one we want`, taskListArray[i]);
+		}
+	}
+	taskListArray = newArray;
+	console.log('taskListArray:', taskListArray);
+
+	if (taskListArray.length == 0) {
+		taskListPlaceholder.style.display = 'block';
+	}
+};
+
+const restoreTask = i => {
+	console.log(i, 'restore');
 };
 
 // this function will insert a new accordion element into our list using data from a form
@@ -47,8 +87,7 @@ const createTask = () => {
 
 	// we remove the placeholder text that is only shown when there are no tasks in the list yet
 	if (taskListArray.length <= 0) {
-		document.getElementsByClassName('task-list-placeholder')[0].style.display =
-			'none';
+		taskListPlaceholder.style.display = 'none';
 	}
 
 	const taskID = taskListArray.length + 1;
@@ -73,9 +112,10 @@ const createTask = () => {
 
 	const newTask = document.createElement('div');
 	// insert the data using a template literal
+	// each task has an ID so we can find it and manipulate it
 	let content = `
     <!-- task element-->
-      <div>
+      <div class="task${taskID}">  
         <div class="accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
@@ -95,7 +135,7 @@ const createTask = () => {
                 <strong>Date Due: </strong> 
                 <code>${taskObj.dateDue.d}/${taskObj.dateDue.m}/${taskObj.dateDue.y}</code>
               </div>
-              <div class="task-btns flex-container">
+              <div class="task-btns flex-container btn${taskObj.id}">
                 <button id="complete-btn">Completed</button>
                 <button id="edit-btn">Edit</button>
                 <button id="delete-btn">Delete</button>
@@ -109,6 +149,24 @@ const createTask = () => {
 
 	newTask.innerHTML = content;
 	taskContainer.appendChild(newTask);
+
+	const buttons = taskContainer.getElementsByClassName(`btn${taskObj.id}`)[0]
+		.children;
+
+	let btn = {
+		id: taskID,
+		complete: (buttons[0].onclick = function () {
+			completeTask(btn.id);
+		}),
+		edit: (buttons[1].onclick = function () {
+			editTask(btn.id);
+		}),
+		delete: (buttons[2].onclick = function () {
+			deleteTask(btn.id);
+		}),
+	};
+
+	taskBtns.push(btn);
 
 	taskListArray.push(taskObj);
 	clearForm();
