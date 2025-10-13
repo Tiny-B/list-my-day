@@ -86,7 +86,14 @@ main {
 }
 
 /* -----Task list------ */
+@media (max-width: 768px) {
+  .task-list-container {
+    background-color: aqua;
+  }
+}
+
 .task-list-container {
+  max-width: 850px;
   width: 90%;
   margin: 20px 20px 70px 20px;
   background-color: var(--secondary-color);
@@ -208,6 +215,7 @@ main {
   color: var(--accent-color);
   font-size: 2rem;
   padding: 0;
+  z-index: 10;
 }
 
 .open-create-dialog:hover {
@@ -229,6 +237,14 @@ main {
   background-color: var(--secondary-color);
   border-top: 1px solid var(--tertiary-accent-color);
   color: var(--main-font-color);
+}
+
+.create {
+  
+}
+
+.edit {
+  display: none;
 }
 
 /* -----Bootstrap overrides----- */

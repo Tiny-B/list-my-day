@@ -13,7 +13,7 @@
 
 	<body>
     <header>
-      <!--We fixed the navbar so it can be accessed when there are many tasks in the list-->
+      <!--fixed navbar, so it can be accessed when there are many tasks in the list-->
       <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">List Your Day</a>
@@ -101,7 +101,8 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Create New Task</h1>
+              <h1 class="modal-title fs-5 create" id="staticBackdropLabel">Create New Task</h1>
+              <h1 class="modal-title fs-5 edit" id="staticBackdropLabel">Edit Task</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -129,9 +130,10 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-edit-btn">Cancel</button>
               <!--disable the create button unless we have the inputs we want, prevents model from closing and doing nothing when no data is present disabled="true"-->
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="create-btn" >Create</button>
+              <button type="button" class="btn btn-primary create" data-bs-dismiss="modal" id="create-btn" >Create</button>
+              <button type="button" class="btn btn-primary edit" data-bs-dismiss="modal" id="edit-btn" >Edit</button>
             </div>
           </div>
         </div>
