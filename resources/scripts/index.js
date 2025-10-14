@@ -14,7 +14,6 @@ const completedTaskContainer = document.getElementsByClassName(
 const completedListPlaceholder = document.getElementsByClassName(
 	'completed-list-placeholder'
 )[0];
-console.log(completedListPlaceholder);
 
 const confirmEditBtn = document.getElementById('edit-btn');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -221,13 +220,33 @@ const completeTask = i => {
 
 const restoreTask = i => {
 	console.log(i, 'restore');
+	const taskToRestore = completedListArray.filter(task => task.id === i).pop();
+	console.log('taskToRestore:', taskToRestore.id);
+
+	const restoredTask = completedTaskContainer.getElementsByClassName(
+		`task${i}`
+	)[0];
+	restoredTask.remove();
+	completedListArray = removeTaskFromArray(
+		completedListArray,
+		true,
+		taskToRestore.id
+	);
+
+	createTask(taskToRestore);
 };
 
 // this function will insert a new accordion element into our list using data from a form
-const createTask = () => {
+const createTask = (task = {}) => {
+	// restoreTask also uses this function so we check if our param has a key, if not it's a new task to create
+	const isNewTask = Object.hasOwn(task, 'id') ? false : true;
+	console.log('isNewTask:', isNewTask);
+
 	// if the form is empty we cancel
-	if (!checkForm()) {
-		return;
+	if (isNewTask) {
+		if (!checkForm()) {
+			return;
+		}
 	}
 
 	// we remove the placeholder text that is only shown when there are no tasks in the list yet
@@ -236,26 +255,37 @@ const createTask = () => {
 	}
 
 	// give each task a random unique ID
-	const taskID = Math.floor(Math.random() * 12053 + Math.random() * 6282);
-	console.log('taskID:', taskID);
+	let taskID = 0;
+	if (isNewTask) {
+		taskID = Math.floor(Math.random() * 12053 + Math.random() * 6282);
+		console.log('taskID:', taskID);
+	} else {
+		taskID = task.id;
+		console.log('taskID:', taskID);
+	}
 
 	// assign the form values to the task object values
-	let taskObj = {
-		id: taskID,
-		// trim values to keep a consistent and clean design
-		title: cleanValue(form[0].value.trim()),
-		desc: cleanValue(form[1].value.trim()),
-		dateAdded: {
-			d: '1', // use device date
-			m: '2',
-			y: '1985',
-		},
-		dateDue: {
-			d: form[2].value,
-			m: form[3].value,
-			y: form[4].value,
-		},
-	};
+	let taskObj = {};
+	if (isNewTask) {
+		taskObj = {
+			id: taskID,
+			// trim values to keep a consistent and clean design
+			title: cleanValue(form[0].value.trim()),
+			desc: cleanValue(form[1].value.trim()),
+			dateAdded: {
+				d: '1', // use device date
+				m: '2',
+				y: '1985',
+			},
+			dateDue: {
+				d: form[2].value,
+				m: form[3].value,
+				y: form[4].value,
+			},
+		};
+	} else {
+		taskObj = task;
+	}
 
 	const newTask = document.createElement('div');
 	newTask.className = 'task-parent';
