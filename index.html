@@ -54,30 +54,36 @@
       
     </div>
     <main class="flex-container">
-      <div class="task-explain-text">
+      <div class="task-explain-text flex-container">
         <p>Create, edit or delete tasks, click the + button to begin.</p>
         <p>Click complete to move the task to the completed list or Click restore to return the task to the main list.</p>
       </div>
-      
-      <!-- sorting the array of tasks is a crucial feature for any kind of list-->
-      <div class="sort-btn-container flex-container" id="sortTasks">
+
+      <div class="main-container flex-container">
+        <!-- sorting the array of tasks is a crucial feature for any kind of list-->
+         <div class="task-sort flex-container">
+          <div class="sort-btn-container flex-container" id="sortTasks">
         <p class="sort-label">Sort by: </p>
         <button class="sort-btn" id="sortAlphabet">A-Z</button>
         <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
         <button class="sort-btn selected" id="sortDate">Date Added</button>
       </div>
 
-    <!-- task list -->
+      <!-- task list -->
       <div class="task-list-container">
         <h2 class="list-title">To-do</h2>
 
         <h2 class="task-list-placeholder">Create a task by clicking the +</h2>
+        <!-------------->
       </div>
-    <!-------------->
+         </div>
 
-    <div class="divider"></div>
+         
+      
+      <div class="divider"></div>
 
-    <div class="sort-btn-container flex-container" id="sortCompleted">
+      <div class="task-sort flex-container">
+        <div class="sort-btn-container flex-container" id="sortCompleted">
         <p class="sort-label">Sort by: </p>
         <button class="sort-btn" id="sortAlphabet">A-Z</button>
         <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
@@ -91,6 +97,12 @@
         <h2 class="completed-list-placeholder">No completed tasks yet!</h2>
     <!-- --------- -->
       </div>
+      </div>
+
+      
+    
+      </div>
+    
 
       <div class="open-btn-container">
         <button type="button" class="btn btn-primary open-create-dialog" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+</button>

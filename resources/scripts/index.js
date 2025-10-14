@@ -213,15 +213,10 @@ const completeTask = i => {
 	}
 
 	completedListArray.push(taskData);
-
-	console.log('Task List: ', taskListArray);
-	console.log('Completed Task List: ', completedListArray);
 };
 
 const restoreTask = i => {
-	console.log(i, 'restore');
 	const taskToRestore = completedListArray.filter(task => task.id === i).pop();
-	console.log('taskToRestore:', taskToRestore.id);
 
 	const restoredTask = completedTaskContainer.getElementsByClassName(
 		`task${i}`
@@ -240,7 +235,6 @@ const restoreTask = i => {
 const createTask = (task = {}) => {
 	// restoreTask also uses this function so we check if our param has a key, if not it's a new task to create
 	const isNewTask = Object.hasOwn(task, 'id') ? false : true;
-	console.log('isNewTask:', isNewTask);
 
 	// if the form is empty we cancel
 	if (isNewTask) {
@@ -258,10 +252,8 @@ const createTask = (task = {}) => {
 	let taskID = 0;
 	if (isNewTask) {
 		taskID = Math.floor(Math.random() * 12053 + Math.random() * 6282);
-		console.log('taskID:', taskID);
 	} else {
 		taskID = task.id;
-		console.log('taskID:', taskID);
 	}
 
 	// assign the form values to the task object values
