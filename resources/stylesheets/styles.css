@@ -252,8 +252,18 @@ main {
   color: var(--main-font-color);
 }
 
-.create {
-  
+.form-labels, .form-inputs {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-element {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.date-label {
+  margin-top: 35px;
 }
 
 .edit {
@@ -289,8 +299,11 @@ main {
 }
 
 @media (max-width: 450px) {
+  .task-sort {
+    width: 90%;
+  }
   .task-list-container {
-    width: 80%;
+    width: 100%;
   }
 
   .sort-btn-container {

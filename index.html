@@ -61,46 +61,41 @@
 
       <div class="main-container flex-container">
         <!-- sorting the array of tasks is a crucial feature for any kind of list-->
-         <div class="task-sort flex-container">
+        <div class="task-sort flex-container">
           <div class="sort-btn-container flex-container" id="sortTasks">
-        <p class="sort-label">Sort by: </p>
-        <button class="sort-btn" id="sortAlphabet">A-Z</button>
-        <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
-        <button class="sort-btn selected" id="sortDate">Date Added</button>
-      </div>
+            <p class="sort-label">Sort by: </p>
+            <button class="sort-btn" id="sortAlphabet">A-Z</button>
+            <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
+            <button class="sort-btn selected" id="sortDate">Date Added</button>
+          </div>
 
-      <!-- task list -->
-      <div class="task-list-container">
-        <h2 class="list-title">To-do</h2>
+          <!-- task list -->
+          <div class="task-list-container">
+            <h2 class="list-title">To-do</h2>
 
-        <h2 class="task-list-placeholder">Create a task by clicking the +</h2>
-        <!-------------->
-      </div>
-         </div>
-
-         
+            <h2 class="task-list-placeholder">Create a task by clicking the +</h2>
+            <!-------------->
+          </div>
+        </div>
       
-      <div class="divider"></div>
+        <div class="divider"></div>
 
-      <div class="task-sort flex-container">
-        <div class="sort-btn-container flex-container" id="sortCompleted">
-        <p class="sort-label">Sort by: </p>
-        <button class="sort-btn" id="sortAlphabet">A-Z</button>
-        <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
-        <button class="sort-btn selected" id="sortDate" style="font-size: 0.8rem;">Date Completed</button>
-      </div>
+        <div class="task-sort flex-container">
+          <div class="sort-btn-container flex-container" id="sortCompleted">
+            <p class="sort-label">Sort by: </p>
+            <button class="sort-btn" id="sortAlphabet">A-Z</button>
+            <button class="sort-btn" id="sortReverseAlphabet">Z-A</button>
+            <button class="sort-btn selected" id="sortDate" style="font-size: 0.8rem;">Date Completed</button>
+          </div>
 
-      <!-- Completed tasks -->
-       <div class="task-list-container">
-        <h2 class="list-title">Completed</h2>
+          <!-- Completed tasks -->
+          <div class="task-list-container">
+            <h2 class="list-title">Completed</h2>
 
-        <h2 class="completed-list-placeholder">No completed tasks yet!</h2>
-    <!-- --------- -->
-      </div>
-      </div>
-
-      
-    
+            <h2 class="completed-list-placeholder">No completed tasks yet!</h2>
+            <!-- --------- -->
+          </div>
+        </div>
       </div>
     
 
@@ -112,35 +107,43 @@
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
+
             <div class="modal-header">
               <h1 class="modal-title fs-5 create" id="staticBackdropLabel">Create New Task</h1>
               <h1 class="modal-title fs-5 edit" id="staticBackdropLabel">Edit Task</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            
+            <!--the data we pass into the taskObj to create the task-->
             <div class="modal-body">
-              <!--the data we pass into the taskObj to create the task-->
               <div class="task-form-container">
                 <form id="task-form">
-                  <code>* Required</code>
-                  <div class="form-element">
-                    <label for="name">Task Name: </label>
-                    <input type="text" id="name" name="name" placeholder="Enter a name..." required/>
+                  <div class="form-element flex-container">
+                    <div class="form-labels flex-container">
+                      
+                      <label for="name">Task Name: <code>* Required</code></label>
+                      <label for="desc">Task Description: </label>
+                      <label class="date-label">Due Date: </label>
+                    </div>
+
+                    <div class="form-inputs flex-container">
+                      <input type="text" id="name" name="name" placeholder="Enter a name..." required/>
+                      <textarea type="text" id="desc" name="desc" placeholder="Enter a desc..."></textarea>
+                      <div class="form-element">
+                        <input type="number" id="date-due-d" name="date-due-d" placeholder="dd" min="1" max="31" value="1"/>
+                        <input type="number" id="date-due-m" name="date-due-m" placeholder="mm" min="1" max="12" value="1"/>
+                        <input type="number" id="date-due-y" name="date-due-y" placeholder="yyyy" min="2025" max="9999" value="2025"/>
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="form-element">
-                    <label for="desc">Task Description: </label>
-                    <textarea type="text" id="desc" name="desc" placeholder="Enter a desc..."></textarea>
-                  </div>
-
-                  <div class="form-element">
-                    <label>Due Date: </label>
-                    <input type="number" id="date-due-d" name="date-due-d" placeholder="dd" min="1" max="31" value="1"/>
-                    <input type="number" id="date-due-m" name="date-due-m" placeholder="mm" min="1" max="12" value="1"/>
-                    <input type="number" id="date-due-y" name="date-due-y" placeholder="yyyy" min="2025" max="9999" value="2025"/>
+                  <div class="form-element flex-container">
+                    
                   </div>
                 </form>
               </div>
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-edit-btn">Cancel</button>
               <!--disable the create button unless we have the inputs we want, prevents model from closing and doing nothing when no data is present disabled="true"-->
