@@ -15,11 +15,17 @@ const completedListPlaceholder = document.getElementsByClassName(
 	'completed-list-placeholder'
 )[0];
 
+const sortBtns = document.getElementsByClassName('sort-btn');
+const taskSortBtns = [sortBtns[0], sortBtns[1], sortBtns[2]];
+const completedSortBtns = [sortBtns[3], sortBtns[4], sortBtns[5]];
+
 const confirmEditBtn = document.getElementById('edit-btn');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
 let createTaskModalElements = document.getElementsByClassName('create');
 let editTaskModalElements = document.getElementsByClassName('edit');
+
+const date = new Date();
 
 // prevents html injection
 const cleanValue = input => {
@@ -153,16 +159,21 @@ const removeTaskFromArray = (list, isCompleted, i) => {
 	return newArray;
 };
 
-const completeTask = i => {
-	if (completedListArray.length == 0) {
-		taskListPlaceholder.style.display = 'none';
+const completeTask = (i, isCompletedTask = false) => {
+	let taskData = {};
+	if (!isCompletedTask) {
+		if (completedListArray.length == 0) {
+			taskListPlaceholder.style.display = 'none';
+		}
+
+		taskData = taskListArray.filter(task => task.id === i).pop();
+		taskListArray = removeTaskFromArray(taskListArray, false, taskData.id);
+
+		const completedTask = taskContainer.getElementsByClassName(`task${i}`)[0];
+		completedTask.remove();
+	} else {
+		taskData = completedListArray.filter(task => task.id === i).pop();
 	}
-
-	const taskData = taskListArray.filter(task => task.id === i).pop();
-	taskListArray = removeTaskFromArray(taskListArray, false, taskData.id);
-
-	const completedTask = taskContainer.getElementsByClassName(`task${i}`)[0];
-	completedTask.remove();
 
 	const container = completedTaskContainer;
 
@@ -212,7 +223,9 @@ const completeTask = i => {
 		completedListPlaceholder.style.display = 'none';
 	}
 
-	completedListArray.push(taskData);
+	if (!isCompletedTask) {
+		completedListArray.push(taskData);
+	}
 };
 
 const restoreTask = i => {
@@ -232,15 +245,13 @@ const restoreTask = i => {
 };
 
 // this function will insert a new accordion element into our list using data from a form
-const createTask = (task = {}) => {
+const createTask = (task = {}, isSorting = false, isCompleteTask = false) => {
 	// restoreTask also uses this function so we check if our param has a key, if not it's a new task to create
 	const isNewTask = Object.hasOwn(task, 'id') ? false : true;
 
 	// if the form is empty we cancel
 	if (isNewTask) {
-		if (!checkForm()) {
-			return;
-		}
+		if (!checkForm()) return;
 	}
 
 	// we remove the placeholder text that is only shown when there are no tasks in the list yet
@@ -265,9 +276,9 @@ const createTask = (task = {}) => {
 			title: cleanValue(form[0].value.trim()),
 			desc: cleanValue(form[1].value.trim()),
 			dateAdded: {
-				d: '1', // use device date
-				m: '2',
-				y: '1985',
+				d: date.getDate(), // use device date
+				m: date.getMonth() + 1,
+				y: date.getFullYear(),
 			},
 			dateDue: {
 				d: form[2].value,
@@ -333,10 +344,98 @@ const createTask = (task = {}) => {
 		deleteTask(taskObj.id);
 	};
 
-	taskListArray.push(taskObj);
-	clearForm();
+	if (!isSorting) {
+		taskListArray.push(taskObj);
+		clearForm();
+	}
+	if (isCompleteTask) {
+		completeTask(taskObj.id);
+	}
 };
 
 createBtn.onclick = createTask;
 
+const sortArray = list => {
+	return list.sort((a, b) => {
+		const titleA = a.title.toUpperCase(); // ignore upper and lowercase
+		const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+		if (titleA < titleB) {
+			return -1;
+		}
+		if (titleA > titleB) {
+			return 1;
+		}
 
+		// names must be equal
+		return 0;
+	});
+};
+
+const switchSortBtnSelected = (index, btnList) => {
+	for (let i = 0; i < btnList.length; i++) {
+		btnList[i].className = 'sort-btn';
+	}
+
+	btnList[index].className = 'sort-btn selected';
+};
+
+const sortTaskList = (sortBy, container, list, isComplete = false) => {
+	if (list.length == 0) return;
+
+	for (let i = 0; i < list.length; i++) {
+		const element = container.getElementsByClassName(`task${list[i].id}`)[0];
+		element.remove();
+	}
+
+	if (sortBy == 'a-z') {
+		list = sortArray(list);
+		if (!isComplete) {
+			switchSortBtnSelected(0, sortBtns);
+		} else {
+			switchSortBtnSelected(0, completedSortBtns);
+		}
+	} else if (sortBy == 'z-a') {
+		list = sortArray(list).reverse();
+		if (!isComplete) {
+			switchSortBtnSelected(1, sortBtns);
+		} else {
+			switchSortBtnSelected(1, completedSortBtns);
+		}
+	} else {
+		list = list.sort((a, b) => a.dateAdded.d - b.dateAdded.d);
+		if (!isComplete) {
+			switchSortBtnSelected(2, sortBtns);
+		} else {
+			switchSortBtnSelected(2, completedSortBtns);
+		}
+	}
+
+	for (let i = 0; i < list.length; i++) {
+		const task = list[i];
+
+		if (!isComplete) {
+			createTask(task, true);
+		} else {
+			completeTask(task.id, true);
+		}
+	}
+};
+
+sortBtns[0].onclick = function () {
+	sortTaskList('a-z', taskContainer, taskListArray);
+};
+sortBtns[1].onclick = function () {
+	sortTaskList('z-a', taskContainer, taskListArray);
+};
+sortBtns[2].onclick = function () {
+	sortTaskList('date-added', taskContainer, taskListArray);
+};
+completedSortBtns[0].onclick = function () {
+	sortTaskList('a-z', completedTaskContainer, completedListArray, true);
+};
+completedSortBtns[1].onclick = function () {
+	sortTaskList('z-a', completedTaskContainer, completedListArray, true);
+};
+completedSortBtns[2].onclick = function () {
+	sortTaskList('date-added', completedTaskContainer, completedListArray, true);
+};
