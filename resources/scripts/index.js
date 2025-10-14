@@ -12,8 +12,9 @@ const completedTaskContainer = document.getElementsByClassName(
 	'task-list-container'
 )[1];
 const completedListPlaceholder = document.getElementsByClassName(
-	'task-list-placeholder'
-)[1];
+	'completed-list-placeholder'
+)[0];
+console.log(completedListPlaceholder);
 
 const confirmEditBtn = document.getElementById('edit-btn');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -48,10 +49,6 @@ const checkForm = () => {
 	}
 
 	return true;
-};
-
-const completeTask = i => {
-	console.log(i, 'complete');
 };
 
 // cherry pick the elements to edit
@@ -111,25 +108,115 @@ const editTask = i => {
 };
 
 // deleting a task by creating a new array without the object we want to delete in it and setting it as the new list
-const deleteTask = i => {
-	const element = taskContainer.getElementsByClassName(`task${i}`)[0];
-	element.remove();
+const deleteTask = (i, isCompleted = false) => {
+	if (isCompleted) {
+		const element = completedTaskContainer.getElementsByClassName(
+			`task${i}`
+		)[0];
+		element.remove();
 
-	// remove from array too
+		// remove from array too
+		completedListArray = removeTaskFromArray(
+			completedListArray,
+			isCompleted,
+			i
+		);
+	} else {
+		const element = taskContainer.getElementsByClassName(`task${i}`)[0];
+		element.remove();
+
+		// remove from array too
+		taskListArray = removeTaskFromArray(taskListArray, isCompleted, i);
+	}
+};
+
+const removeTaskFromArray = (list, isCompleted, i) => {
 	let newArray = [];
-	const taskToDelete = taskListArray.filter(obj => obj.id == i).pop();
+	const taskToDelete = list.filter(obj => obj.id == i).pop();
 
-	for (let i = 0; i < taskListArray.length; i++) {
-		if (taskListArray[i].id !== taskToDelete.id) {
-			newArray.push(taskListArray[i]);
+	for (let i = 0; i < list.length; i++) {
+		if (list[i].id !== taskToDelete.id) {
+			newArray.push(list[i]);
 		}
 	}
-	taskListArray = newArray;
 
 	// show placeholder text when there are no tasks
-	if (taskListArray.length == 0) {
-		taskListPlaceholder.style.display = 'block';
+	if (isCompleted) {
+		if (newArray.length == 0) {
+			completedListPlaceholder.style.display = 'block';
+		}
+	} else {
+		if (newArray.length == 0) {
+			taskListPlaceholder.style.display = 'block';
+		}
 	}
+
+	return newArray;
+};
+
+const completeTask = i => {
+	if (completedListArray.length == 0) {
+		taskListPlaceholder.style.display = 'none';
+	}
+
+	const taskData = taskListArray.filter(task => task.id === i).pop();
+	taskListArray = removeTaskFromArray(taskListArray, false, taskData.id);
+
+	const completedTask = taskContainer.getElementsByClassName(`task${i}`)[0];
+	completedTask.remove();
+
+	const container = completedTaskContainer;
+
+	const newTask = document.createElement('div');
+	newTask.className = `task${taskData.id}`;
+
+	let content = `
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse${taskData.id}" aria-expanded="true" aria-controls="panelsStayOpen-collapse${taskData.id}">
+          ${taskData.title}
+        </button>
+      </h2>
+
+      <div id="panelsStayOpen-collapse${taskData.id}" class="accordion-collapse collapse">
+        <div class="accordion-body flex-container">
+          <p class="task-element">${taskData.desc}</p>
+          <div class="task-element flex-container">
+            <strong>Date Completed: </strong> <code>${taskData.dateAdded.d}/${taskData.dateAdded.m}/${taskData.dateAdded.y}</code>
+          </div>
+          <div class="task-btns flex-container btn${taskData.id}">
+            <button id="restore-btn">Restore</button>
+            <button id="delete-btn">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+
+	newTask.innerHTML = content;
+	container.appendChild(newTask);
+
+	const buttons = container.getElementsByClassName(`btn${taskData.id}`)[0]
+		.children;
+
+	buttons[0].onclick = function () {
+		restoreTask(taskData.id);
+	};
+
+	buttons[1].onclick = function () {
+		deleteTask(taskData.id, true);
+	};
+
+	if (completedListArray.length == 0) {
+		completedListPlaceholder.style.display = 'none';
+	}
+
+	completedListArray.push(taskData);
+
+	console.log('Task List: ', taskListArray);
+	console.log('Completed Task List: ', completedListArray);
 };
 
 const restoreTask = i => {
@@ -171,10 +258,10 @@ const createTask = () => {
 	};
 
 	const newTask = document.createElement('div');
+	newTask.className = 'task-parent';
 	// insert the data using a template literal
 	// each task has an ID so we can find it and manipulate it
 	let content = `
-    <!-- task element-->
       <div class="task${taskID}">  
         <div class="accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
@@ -204,8 +291,7 @@ const createTask = () => {
           </div>
         </div>
       </div>
-    </div>
-    <!-- --------- -->`;
+    </div>`;
 
 	newTask.innerHTML = content;
 	taskContainer.appendChild(newTask);
@@ -217,12 +303,12 @@ const createTask = () => {
 		completeTask(taskObj.id);
 	};
 
-	buttons[2].onclick = function () {
-		deleteTask(taskObj.id);
-	};
-
 	buttons[1].onclick = function () {
 		editTask(taskObj.id);
+	};
+
+	buttons[2].onclick = function () {
+		deleteTask(taskObj.id);
 	};
 
 	taskListArray.push(taskObj);
@@ -231,27 +317,4 @@ const createTask = () => {
 
 createBtn.onclick = createTask;
 
-//   <!-- task element completed -->
-//     <div class="accordion" id="accordionPanelsStayOpenExample">
-//     <div class="accordion-item">
-//       <h2 class="accordion-header">
-//         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsec1" aria-expanded="true" aria-controls="panelsStayOpen-collapsec1">
-//           Task Title
-//         </button>
-//       </h2>
 
-//       <div id="panelsStayOpen-collapsec1" class="accordion-collapse collapse">
-//         <div class="accordion-body flex-container">
-//           <p class="task-element">Task description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, eaque..</p>
-//           <div class="task-element flex-container">
-//             <strong>Date Completed: </strong> <code>01/01/2025</code>
-//           </div>
-//           <div class="task-btns flex-container">
-//             <button id="restore-btn">Restore</button>
-//             <button id="delete-btn">Delete</button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// <!-- --------- -->
