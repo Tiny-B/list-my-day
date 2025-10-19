@@ -16,36 +16,7 @@
       <!--fixed navbar, so it can be accessed when there are many tasks in the list-->
       <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">List Your Day</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">FAQ</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Tasks
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#">Create</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Export</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Import</a></li>
-                </ul>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search for task by name..." aria-label="Search"/>
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
+          <a class="navbar-brand" href="#top">List Your Day</a>
         </div>
       </nav>
     </header>
@@ -53,7 +24,7 @@
     <div class="bg-img">
       
     </div>
-    <main class="flex-container">
+    <main class="flex-container" id="top">
       <div class="task-explain-text flex-container">
         <p>Create, edit or delete tasks, click the + button to begin.</p>
         <p>Click complete to move the task to the completed list or Click restore to return the task to the main list.</p>

@@ -379,6 +379,7 @@ const switchSortBtnSelected = (index, btnList) => {
 	btnList[index].className = 'sort-btn selected';
 };
 
+// sort by removing the elements and sorting the array then adding the elements back, independently for each list
 const sortTaskList = (sortBy, container, list, isComplete = false) => {
 	if (list.length == 0) return;
 
