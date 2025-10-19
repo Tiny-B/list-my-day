@@ -30,20 +30,31 @@
   margin-bottom: 20px;
 }
 
-.bg-img {
-  width: 100%;
+html {
   height: 100%;
-  position: absolute;
-  z-index: -1;
-  background-image: url(../images/star_bg.webp);
-  opacity: 0.1;
-  background-size: 500px;
 }
 
 body {
 	background-color: var(--bg-color);
 	color: var(--main-font-color);
-  
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  background-image: url(../images/star_bg.webp);
+  background-size: 500px;
+  background-position: center;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;   
+  background: rgba(0,0,0,0.9);
+  pointer-events: none;   
+  z-index: -2;
 }
 
 main {
@@ -51,6 +62,7 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  flex: 1 0 auto;
 }
 
 /* -----Sort buttons ------*/
@@ -89,7 +101,7 @@ main {
   flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .task-sort {
@@ -221,8 +233,8 @@ main {
 }
 
 .open-create-dialog {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   background-color: var(--secondary-color);
   border: 3px solid var(--accent-color);
   color: var(--accent-color);
@@ -271,8 +283,7 @@ main {
 }
 
 footer {
-  position: absolute;
-  top: 100%;
+  flex-shrink: 0;
   background: var(--gradient-colors);
   height: 50px;
   width: 100%;
