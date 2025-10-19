@@ -270,6 +270,18 @@ main {
   display: none;
 }
 
+footer {
+  margin-top: 150px;
+  background: var(--gradient-colors);
+  height: 50px;
+  width: 100%;
+}
+
+footer p {
+  height: fit-content;
+  margin: 0;
+}
+
 /* -----Bootstrap overrides----- */
 .navbar-brand {
 	color: var(--main-font-color);
