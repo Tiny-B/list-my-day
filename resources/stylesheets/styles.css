@@ -271,10 +271,13 @@ main {
 }
 
 footer {
-  margin-top: 150px;
+  position: absolute;
+  top: 100%;
   background: var(--gradient-colors);
   height: 50px;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 footer p {
