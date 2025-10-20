@@ -282,6 +282,10 @@ main {
   display: none;
 }
 
+#create-btn:disabled {
+  background-color: rgb(143, 0, 0);
+}
+
 footer {
   flex-shrink: 0;
   background: var(--gradient-colors);

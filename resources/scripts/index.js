@@ -2,6 +2,7 @@ let taskListArray = [];
 let completedListArray = [];
 
 const createBtn = document.getElementById('create-btn');
+const nameInputField = document.getElementById('name');
 
 const taskContainer = document.getElementsByClassName('task-list-container')[0];
 const taskListPlaceholder = document.getElementsByClassName(
@@ -244,19 +245,41 @@ const restoreTask = i => {
 	createTask(taskToRestore);
 };
 
+// check if the name field has any content to enable or disable the create button
+const toggleCreateBtn = () => {
+	const hasContent = nameInputField.value.trim().length > 0;
+
+	createBtn.disabled = !hasContent;
+};
+toggleCreateBtn();
+nameInputField.addEventListener('input', toggleCreateBtn);
+
+// check for duplication
+const checkForDuplicateTask = taskName => {
+	for (let i = 0; i < taskListArray.length; i++) {
+		if (taskListArray[i].title == taskName) {
+			return true;
+		}
+	}
+
+	return false;
+};
+
 // this function will insert a new accordion element into our list using data from a form
 const createTask = (task = {}, isSorting = false, isCompleteTask = false) => {
 	// restoreTask also uses this function so we check if our param has a key, if not it's a new task to create
 	const isNewTask = Object.hasOwn(task, 'id') ? false : true;
 
-	// if the form is empty we cancel
-	if (isNewTask) {
-		if (!checkForm()) return;
-	}
-
 	// we remove the placeholder text that is only shown when there are no tasks in the list yet
 	if (taskListArray.length == 0) {
 		taskListPlaceholder.style.display = 'none';
+	}
+
+	if (isNewTask) {
+		if (checkForDuplicateTask(cleanValue(form[0].value.trim()))) {
+			alert('Task already exists!');
+			return;
+		}
 	}
 
 	// give each task a random unique ID
@@ -351,6 +374,8 @@ const createTask = (task = {}, isSorting = false, isCompleteTask = false) => {
 	if (isCompleteTask) {
 		completeTask(taskObj.id);
 	}
+
+	toggleCreateBtn();
 };
 
 createBtn.onclick = createTask;
