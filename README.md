@@ -19,5 +19,7 @@ I went for the two list style, one list is the to-do list and another is a list 
 - The app is responsive for mobile and desktop.
 - The navbar is fixed to the top.
 - Users can click the title in the nav bar to return to the top of the page at any time.
+- Disabled create task button when no input is in the required field.
+- Detects duplicate tasks
 
 Link to live page: [https://tiny-b.github.io/list-my-day/](https://tiny-b.github.io/list-my-day/)
